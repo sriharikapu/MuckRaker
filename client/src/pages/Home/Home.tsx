@@ -50,17 +50,6 @@ export default function ButtonAppBar() {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            <AppBar position="static" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                        Muck Raker
-                    </Typography>
-                    <Button color="inherit" className={classes.loginBtn}>
-                        Login
-                        </Button>
-                </Toolbar>
-            </AppBar>
             <Grid
                 container
                 direction="row"
@@ -75,6 +64,5 @@ export default function ButtonAppBar() {
                 </Grid>
 
             </Grid>
-        </div>
     );
 }
