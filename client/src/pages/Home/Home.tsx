@@ -1,26 +1,68 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import { Grid, Paper } from '@material-ui/core';
 
-function Home() {
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+        height: '100vh',
+        minHeight: '100vh'
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+        fontFamily: 'Raleway',
+        fontSize: 30,
+        fontWeight: 800
+    },
+    leftPaper: {
+        minHeight: '100vh',
+    },
+    rightPaper: {
+        minHeight: '100vh',
+    },
+    control: {
+        padding: theme.spacing(2),
+    },
+    loginBtn: {
+        fontFamily: 'Raleway',
+    },
+    grid:
+    {
+        height: '100%'
+    },
+    appBar: {
+        backgroudColor: 'black'
+    }
+}));
+
+
+
+export default function ButtonAppBar() {
+    const classes = useStyles();
+
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-        </a>
-            </header>
-        </div>
+            <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="center"
+            >
+                <Grid key={1} xs item>
+                    <Paper className={classes.leftPaper}>xs</Paper>
+                </Grid>
+                <Grid key={2} xs item>
+                    <Paper className={classes.rightPaper}>xs</Paper>
+                </Grid>
+
+            </Grid>
     );
 }
-
-export default Home;
