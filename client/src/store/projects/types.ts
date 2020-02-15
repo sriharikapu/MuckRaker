@@ -8,6 +8,7 @@ export interface ProjectModel {
   budget: number;
   report: string;
   Location: string;
+  imageURL: string
 }
 
 export interface ProjectsModel {

@@ -1,5 +1,5 @@
 import user, { UserModel } from "./user";
-import { createStore, createTypedHooks } from "easy-peasy";
+import { createStore, createTypedHooks, persist } from "easy-peasy";
 import projects, { ProjectsModel } from "./projects";
 const typedHooks = createTypedHooks<StoreModel>();
 
@@ -13,7 +13,7 @@ const model: StoreModel = {
     projects
 }
 
-export default createStore(model);
+export default createStore(persist(model));
 export const useStoreActions = typedHooks.useStoreActions;
 export const useStoreDispatch = typedHooks.useStoreDispatch;
 export const useStoreState = typedHooks.useStoreState;

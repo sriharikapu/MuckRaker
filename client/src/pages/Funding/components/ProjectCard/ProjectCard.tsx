@@ -1,19 +1,17 @@
 import React from "react";
 import { Card, Typography, Button } from "@material-ui/core";
 import { useStyles } from "./card.style";
+import { ProjectModel } from "../../../../store/projects";
 
-interface PCProps {
-  name: string;
-}
-const ProjectCard: React.FC<PCProps> = props => {
+const ProjectCard: React.FC<ProjectModel> = props => {
   const classes = useStyles();
-  const { name } = props;
+  const { name, budget, imageURL } = props;
   return (
     <Card className={classes.card}>
-      <img src="#" className={classes.img} alt="User Profile" />
+      <img src={imageURL} className={classes.img} alt="User Profile" />
       <div className={classes.container}>
         <Typography>{name}</Typography>
-        <Typography>$ {name}</Typography>
+        <Typography>$ {budget}</Typography>
       </div>
       <Typography variant="caption">Caption</Typography>
       <div className={classes.container}>
