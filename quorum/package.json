@@ -1,0 +1,36 @@
+{
+  "name": "smart-contract-prototype",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "ganache": "ganache-cli -q -p 8545",
+    "build": "truffle build"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.3",
+    "chai": "^4.2.0",
+    "concurrently": "^4.1.2",
+    "ganache-cli": "^6.7.0",
+    "truffle-typings": "^1.0.8",
+    "typechain": "^0.3.21",
+    "chai-as-promised": "^7.1.1",
+    "chai-bn": "^0.1.1"
+  },
+  "dependencies": {
+    "oneclick": "^1.0.2",
+    "openzeppelin-solidity": "2.2.0",
+    "retry": "^0.12.0",
+    "truffle": "^5.0.42",
+    "@truffle/hdwallet-provider": "^1.0.6",
+    "web3": "^1.0.0-beta.37"
+  }
+}
