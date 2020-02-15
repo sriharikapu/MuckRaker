@@ -1,12 +1,7 @@
-import React from 'react';
+import { Button, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import { Grid, Paper } from '@material-ui/core';
+import React from 'react';
+import Title from './Title';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,10 +19,10 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 800
     },
     leftPaper: {
-        minHeight: '100vh',
+        padding: 100,
+        background: 'linear-gradient(to right, rgb(250,250,250), rgb(220,220,220))'
     },
     rightPaper: {
-        minHeight: '100vh',
     },
     control: {
         padding: theme.spacing(2),
@@ -41,6 +36,13 @@ const useStyles = makeStyles(theme => ({
     },
     appBar: {
         backgroudColor: 'black'
+    },
+    primaryBtn: {
+        width: '100%',
+        fontFamily: 'Raleway',
+        fontSize: 20,
+        fontWeight: 500,
+        background: 'black'
     }
 }));
 
@@ -50,19 +52,47 @@ export default function ButtonAppBar() {
     const classes = useStyles();
 
     return (
+        <Grid
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="center"
+            style={{ minHeight: '100vh' }}
+        >
             <Grid
-                container
-                direction="row"
-                justify="space-evenly"
+                item
+                direction="column"
                 alignItems="center"
+                justify="center"
+                key={1}
             >
-                <Grid key={1} xs item>
-                    <Paper className={classes.leftPaper}>xs</Paper>
-                </Grid>
-                <Grid key={2} xs item>
-                    <Paper className={classes.rightPaper}>xs</Paper>
-                </Grid>
-
+                <Paper className={classes.leftPaper}>
+                    <Title top='Muck' bottom="Rakers" fontSize={100} />
+                    <br />
+                    <br />
+                    <span style={{ fontFamily: 'Raleway', fontSize: 20 }}>
+                        Enabling journalists to report without fear
+                    </span>
+                </Paper>
+                <div style={{ height: 20 }} />
+                <Button variant="contained" color="primary" className={classes.primaryBtn} >
+                    Get Started
+            </Button>
             </Grid>
+            <Grid
+                item
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+                key={2}
+            >
+                <img src="/images/press_freedom_fists.png" style={{
+                    borderRadius: 10,
+                    WebkitMaskImage: '-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)))',
+                    maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))'
+                }} />
+            </Grid>
+        </Grid >
     );
 }

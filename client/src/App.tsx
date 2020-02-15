@@ -8,7 +8,7 @@ import Header from './components/Header';
 function App() {
   return (
     <Router>
-      <Header></Header>
+      <Header />
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/funding" component={Funding}></Route>

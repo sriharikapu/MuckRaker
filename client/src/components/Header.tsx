@@ -4,7 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
     header: {
         display: 'flex',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        fontFamily: 'Raleway',
+        fontWeight: 800
     }
 })
 const Header: React.FC = () => {
