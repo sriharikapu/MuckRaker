@@ -9,7 +9,8 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: "black",
     color: "white",
     alignItems: "center",
-    padding: "10px"
+    padding: "10px",
+    marginBottom: "10vh"
   },
   menuSection: {
     display: "flex",
@@ -17,8 +18,8 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   logoSection: {
-    display: 'flex',
-    alignItems: 'center'
+    display: "flex",
+    alignItems: "center"
   },
   link: {
     textDecoration: "none",
@@ -29,8 +30,8 @@ export const useStyles = makeStyles(theme => ({
     transition: "0.5s",
     minWidth: "100px",
     "&:hover": {
-      backgroundColor: "white",
-      color: "black"
+      background: "linear-gradient(to right, #ff9966, #ff5e62)",
+      color: "white"
     }
   }
 }));
