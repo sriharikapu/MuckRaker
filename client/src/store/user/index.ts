@@ -1,9 +1,12 @@
 import { UserModel } from "./types";
+import { logIn , updateUser} from "./actions";
 
 const user: UserModel = {
     isLoggedIn: false,
     address: "",
-    web3: {}
+    web3: {},
+    logIn,
+    updateUser
 }
 
 export default user;

@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Home } from './pages';
-import Funding from './pages/Funding/Funding';
-import Projects from './pages/Projects/Projects';
+import { Home, Funding, Projects } from './pages';
 import Header from './components/Header';
 
 function App() {
