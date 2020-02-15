@@ -1,13 +1,16 @@
 import user, { UserModel } from "./user";
 import { createStore, createTypedHooks } from "easy-peasy";
+import projects, { ProjectsModel } from "./projects";
 const typedHooks = createTypedHooks<StoreModel>();
 
 export interface StoreModel {
-    user: UserModel
+    user: UserModel,
+    projects: ProjectsModel
 }
 
 const model: StoreModel = {
-    user
+    user,
+    projects
 }
 
 export default createStore(model);
