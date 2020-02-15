@@ -1,6 +1,6 @@
 import Home from "./Home/Home";
 import Funding from './Funding/Funding'
-import Projects from './Projects/Projects'
+import Projects from './Investigation/Investigation'
 
 export {
     Home,
