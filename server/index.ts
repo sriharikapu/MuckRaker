@@ -1,11 +1,13 @@
-import axios, { AxiosResponse } from 'axios'
-import { config } from "./keys"
+import { app } from "./src/express"
+import { IPFSProxy } from './src/ipfs'
 
-console.log(config.ipfs_endpoint)
-console.log(config)
+const PORT = process.env.PORT || 8080
 
-const url: string = `https://${config.quorum_secret}@${config.ipfs_endpoint}/v0`
+const main = async () => {
+    const cid: Buffer = (await IPFSProxy.add('hi.txt', 'string', '775'))
+    console.log(await IPFSProxy.cat(cid))
+}
 
-axios.get(url + '/id').then((response: AxiosResponse<any>) => {
-    console.log(response.data)
-}).catch(console.log)
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}.`)
+})
