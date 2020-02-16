@@ -1,9 +1,5 @@
 import Home from "./Home/Home";
-import Funding from './Funding/Funding'
-import Projects from './Investigation/Investigation'
+import Funding from "./Funding/Funding";
+import Investigation from "./Investigation/Investigation";
 
-export {
-    Home,
-    Funding,
-    Projects
-}
+export { Home, Funding, Investigation };

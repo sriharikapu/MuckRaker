@@ -1,12 +1,15 @@
 import { UserModel } from "./types";
-import { logIn } from "./actions";
+import { connectToMetamask, updateWeb3, updateAddress } from "./actions";
+import { computed } from "easy-peasy";
 
 const user: UserModel = {
-    isLoggedIn: false,
-    address: "",
-    web3: {},
-    logIn
-}
+  isLoggedIn: computed(state => state.address.length > 0),
+  address: "",
+  web3: {},
+  connectToMetamask,
+  updateWeb3,
+  updateAddress
+};
 
 export default user;
-export * from './types'
+export * from "./types";

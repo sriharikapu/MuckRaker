@@ -8,11 +8,11 @@ import { useStyles } from "./Header.style";
 const Header: React.FC = () => {
   const classes = useStyles();
   const { isLoggedIn, address } = useStoreState(state => state.user);
-  const { logIn } = useStoreActions(state => state.user);
+  const { connectToMetamask } = useStoreActions(state => state.user);
 
   const onClick = () => {
     try {
-      logIn();
+      connectToMetamask();
     } catch (e) {
       console.log(`An error ocurred in Header: ${e}`);
     }
@@ -32,14 +32,18 @@ const Header: React.FC = () => {
         <Link to="/investigate" className={classes.link}>
           Start Your Investigation
         </Link>
-        <Button
-          variant="outlined"
-          color="inherit"
-          className={classes.button}
-          onClick={onClick}
-        >
-          Connect With Metamask
-        </Button>
+        {isLoggedIn === true ? (
+          <p>{address}</p>
+        ) : (
+          <Button
+            variant="outlined"
+            color="inherit"
+            className={classes.button}
+            onClick={onClick}
+          >
+            Connect With Metamask
+          </Button>
+        )}
       </Grid>
     </Grid>
   );

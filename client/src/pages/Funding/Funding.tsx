@@ -1,16 +1,24 @@
 import React, { useEffect } from "react";
-import { Grid, TextField, InputAdornment } from "@material-ui/core";
+import { Grid, TextField, InputAdornment, makeStyles } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
 import ProjectCard from "./components/ProjectCard/ProjectCard";
 import { useStoreState, useStoreActions } from "../../store";
+
+const useStyles = makeStyles({
+  root: {
+    paddingLeft: "5vw",
+    paddingRight: "5vw"
+  }
+});
 const Funding: React.FC = () => {
   const { projects } = useStoreState(state => state.projects);
   const { getProjects } = useStoreActions(state => state.projects);
+  const classes = useStyles();
   useEffect(() => {
     getProjects();
   }, [getProjects]);
   return (
-    <div>
+    <div className={classes.root}>
       <TextField
         placeholder="Search Projects"
         variant="outlined"

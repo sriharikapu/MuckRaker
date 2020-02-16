@@ -1,16 +1,30 @@
-import { Action, action } from "easy-peasy";
+import { Action, action, thunk, Thunk } from "easy-peasy";
 import { UserModel } from "./types";
+import Web3 from "web3";
 
-// declare global {
-//     interface Window { ethereum: any; web3: any }
-// }
-
-export const logIn: Action<UserModel> = action((state, payload) => {
-    console.log("Log in attempted")
+export const connectToMetamask: Thunk<UserModel> = thunk(
+  async (actions, payload) => {
+    console.log("Log in attempted");
     try {
-        window.ethereum.enable();
+      const accounts = await window.ethereum.enable();
+      const web3 = new Web3(window.ethereum);
 
-    } catch(e) {
-        console.log('Error occured while attempting to login')
+      actions.updateAddress(accounts[0]);
+      actions.updateWeb3(web3);
+    } catch (e) {
+      console.log("Error occured while attempting to login");
     }
-})
+  }
+);
+
+export const updateWeb3: Action<UserModel, Web3> = action((state, payload) => {
+  console.log("Attempted to update web3");
+  state.web3 = payload;
+});
+
+export const updateAddress: Action<UserModel, string> = action(
+  (state, payload) => {
+    console.log("Attempted to update ethereum address");
+    state.address = payload;
+  }
+);
