@@ -1,18 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, TextField, InputAdornment, makeStyles } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
+import FuzzySearch from "fuzzy-search";
 import ProjectCard from "./components/ProjectCard/ProjectCard";
 import { useStoreState, useStoreActions } from "../../store";
 
 const useStyles = makeStyles({
   root: {
     paddingLeft: "5vw",
-    paddingRight: "5vw"
+    paddingRight: "5vw",
+    marginTop: "10vh"
   }
 });
 const Funding: React.FC = () => {
-  const { projects } = useStoreState(state => state.projects);
+  const [searchFilter, setFilter] = useState("");
   const { getProjects } = useStoreActions(state => state.projects);
+  const { projects } = useStoreState(state => state.projects);
+  const searcher = new FuzzySearch(projects, ["name", "category", "location"]);
+  const filteredProjects = searcher.search(searchFilter);
   const classes = useStyles();
   useEffect(() => {
     getProjects();
@@ -22,6 +27,8 @@ const Funding: React.FC = () => {
       <TextField
         placeholder="Search Projects"
         variant="outlined"
+        value={searchFilter}
+        onChange={event => setFilter(event.target.value)}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -32,9 +39,9 @@ const Funding: React.FC = () => {
       ></TextField>
       <h1>Projects Currently Funding</h1>
       <Grid container spacing={4}>
-        {projects.splice(0, 4).map((project, index) => {
+        {projects.slice(0, 4).map((project, index) => {
           return (
-            <Grid item xs={12} md={6} lg={3} key={`${project.name}-${index}`}>
+            <Grid item xs={12} md={6} key={`${project.name}-${index}`}>
               <ProjectCard {...project}></ProjectCard>
             </Grid>
           );
@@ -42,9 +49,9 @@ const Funding: React.FC = () => {
       </Grid>
       <h1>All Projects</h1>
       <Grid container spacing={4}>
-        {projects.map((project, index) => {
+        {filteredProjects.map((project, index) => {
           return (
-            <Grid item xs={12} md={6} lg={3} key={`${project.name}-${index}`}>
+            <Grid item xs={12} md={6} key={`${project.name}-${index}`}>
               <ProjectCard {...project}></ProjectCard>
             </Grid>
           );

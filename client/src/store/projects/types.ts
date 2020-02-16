@@ -7,7 +7,7 @@ export interface ProjectModel {
   category: string;
   budget: number;
   report: string;
-  Location: string;
+  location: string;
   imageURL: string
 }
 
