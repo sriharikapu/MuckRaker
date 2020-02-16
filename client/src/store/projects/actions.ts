@@ -26,3 +26,8 @@ export const addProject: Action<ProjectsModel, ProjectModel> = action(
     console.log("Attempted to add a project");
   }
 );
+
+
+export const fundProject: Thunk<ProjectsModel, any> = thunk((actions, payload) => {
+  console.log('Attempted to fund project')
+})

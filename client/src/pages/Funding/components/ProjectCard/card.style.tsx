@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
   },
   img: {
     backgroundColor: "darkgrey",
-    maxWidth: theme.spacing(30)
+    width: theme.spacing(25)
   },
   container: {
     display: "flex",
@@ -33,5 +33,14 @@ export const useStyles = makeStyles(theme => ({
   dot: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1)
+  },
+  button: {
+    backgroundColor: "#85bb65",
+    color: "white",
+    transition: "0.3s",
+    marginLeft: theme.spacing(1),
+    "&:hover": {
+      backgroundColor: "green"
+    }
   }
 }));
