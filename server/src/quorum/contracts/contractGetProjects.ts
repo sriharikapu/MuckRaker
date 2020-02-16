@@ -4,12 +4,12 @@ import { config } from "../../keys";
 import { QuoromMasterWallet } from "../QuoromWallet";
 
 
-const contractGetProducts = async (ownerAddress: string): Promise<string[]> => {
+const contractGetProjects = async (ownerAddress: string): Promise<string[]> => {
     const contract: MuckRakerContract = MuckRakerContractFactory.connect(config.quorum_contract_address, QuoromMasterWallet);
     const result = await contract.functions.get_projects(ownerAddress)
     return result;
 }
 
 export {
-    contractGetProducts
+    contractGetProjects
 }
