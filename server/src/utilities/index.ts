@@ -17,13 +17,13 @@ const main = async (cnt: number) => {
             budget: + faker.commerce.price(10, 10000),
             category: faker.company.bsAdjective() + faker.company.bsNoun(),
             createdAt: Date.now(),
-            imageURL: `https://picsum.photos/${Math.floor(Math.random() * 1000)}/200/200`,
+            imageURL: `https://picsum.photos/id/${Math.floor(Math.random() * 1000)}/200/200`,
             name: faker.company.bsAdjective() + faker.company.bsNoun(),
         }
 
         console.log(project)
 
-        // await addProject(address, address, encodeFileContents(address, address, JSON.stringify(project)))
+        await addProject(address, address, encodeFileContents(address, address, JSON.stringify(project)))
     }
 }
 
