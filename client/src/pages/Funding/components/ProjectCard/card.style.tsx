@@ -3,7 +3,7 @@ export const useStyles = makeStyles(theme => ({
   card: {
     padding: theme.spacing(3),
     margin: theme.spacing(0, 3),
-    minHeight: "40vh",
+    minHeight: theme.spacing(30),
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
@@ -30,13 +30,8 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     textAlign: "left"
   },
-  pending: {
-    color: theme.palette.warning.dark
-  },
-  denied: {
-    color: theme.palette.error.dark
-  },
-  approved: {
-    color: theme.palette.secondary.dark
+  dot: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   }
 }));

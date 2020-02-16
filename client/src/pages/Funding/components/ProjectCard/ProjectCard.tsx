@@ -13,7 +13,7 @@ const ProjectCard: React.FC<ProjectModel> = props => {
         <Typography>{name}</Typography>
         <div className={classes.rowContainer}>
           <Typography variant="caption">{category}</Typography>
-          <span>&#183;</span>
+          <span className={classes.dot}>&#183;</span>
 
           <Typography variant="caption">{location}</Typography>
         </div>
