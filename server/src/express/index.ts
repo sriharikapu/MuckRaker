@@ -1,11 +1,12 @@
-import express, { Request, Response } from 'express'
-import { MetaMaskIDMiddleware, RESPONSE_LOCALS_ETH_ADDRESS } from './middleware/MetaMaskIDMiddleware';
-import { IPFSProxy } from '../ipfs';
+import bodyParser from 'body-parser';
 import { keccak256 } from 'ethers/utils';
-import { contractCreateProduct } from '../quorum/contracts/contractCreateProduct';
-import bodyParser from 'body-parser'
-import { ethers } from 'ethers';
-import { contractGetProducts } from '../quorum/contracts/contractGetProducts';
+import express, { Request, Response } from 'express';
+import { IPFSProxy } from '../ipfs';
+import { contractCreateProject } from '../quorum/contracts/contractCreateProduct';
+import { contractGetAllProjects } from '../quorum/contracts/contractGetAllProjects';
+import { contractGetProjects } from '../quorum/contracts/contractGetProjects';
+import { TempType } from '../types/ProjectModel';
+import { MetaMaskIDMiddleware, RESPONSE_LOCALS_ETH_ADDRESS } from './middleware/MetaMaskIDMiddleware';
 
 const app: express.Application = express();
 
@@ -15,8 +16,6 @@ app.use(bodyParser.json())
 app.post('/api/add', MetaMaskIDMiddleware, async (request: Request, response: Response) => {
     const ownerAddr: string = response.locals[RESPONSE_LOCALS_ETH_ADDRESS];
 
-    console.log("OwnerAddress", ownerAddr)
-
     const fileContents: string = request.body.file;
     const fileName: string = request.body.name || keccak256(fileContents);
 
@@ -25,60 +24,72 @@ app.post('/api/add', MetaMaskIDMiddleware, async (request: Request, response: Re
     const encodeFileContents: string = `${ownerAddr}!${fileName}!${fileContents}`
 
     const fileCID: Buffer = await IPFSProxy.add(path, encodeFileContents, '777');
-
     const fileCIDB64: string = fileCID.toString('base64')
 
-    console.log('Uploaded to CID', fileCID, fileCID.length)
+    const creationSuccess: boolean = await contractCreateProject(ownerAddr, fileCIDB64)
 
-    const productSuccess: boolean = await contractCreateProduct(ownerAddr, fileCIDB64)
-
-    console.log(productSuccess)
-
-    response.status(200).json({ response: true });
+    response.status(200).json({ response: creationSuccess });
 });
 
-type Product = {
+app.post('/api/fund', MetaMaskIDMiddleware, async (request: Request, response: Response) => {
+    const ownerAddr: string = response.locals[RESPONSE_LOCALS_ETH_ADDRESS];
+
+    // const projectCID: string = 
+})
+
+app.get('/api/all_projects', MetaMaskIDMiddleware, async (request: Request, response: Response) => {
+    const projectCIDs: string[] = (await contractGetAllProjects()).filter(str => str.length !== 0);
+
+    const projects: Project<TempType>[] = await batchQueryIPFS<TempType>(projectCIDs);
+
+    response.status(200).json({ response: projects })
+})
+
+type Project<T> = {
     name: string,
     ownerAddress: string,
-    contents: string
+    contents: T
 }
 
-const parseIPFSStorageRecordToProduct = (ipfsContents: string): Product => {
+const parseIPFSStorageRecord = <T>(ipfsContents: string): Project<T> => {
     const parts: string[] = ipfsContents.split('!');
     return {
         ownerAddress: parts[0],
         name: parts[1],
-        contents: parts[2]
+        contents: (JSON.parse(parts[2]) as T)
     }
 }
 
-app.get('/api/products', MetaMaskIDMiddleware, async (request: Request, response: Response) => {
+const batchQueryIPFS = async <T>(projectCIDArray: string[]): Promise<Project<T>[]> => {
+    const projects: Project<T>[] = [];
+
+    for await (const cid of projectCIDArray) {
+        const b64Buffer: Buffer = new Buffer(cid, 'base64');
+
+        const fileContents: string = await IPFSProxy.cat(b64Buffer);
+
+        const project: Project<T> = parseIPFSStorageRecord<T>(fileContents);
+
+        projects.push(project);
+    }
+
+    return projects;
+}
+
+app.get('/api/projects', MetaMaskIDMiddleware, async (request: Request, response: Response) => {
     const ownerAddr: string = response.locals[RESPONSE_LOCALS_ETH_ADDRESS];
 
     try {
-        const productCIDs: string[] = await contractGetProducts(ownerAddr);
+        const projectCIDs: string[] = await contractGetProjects(ownerAddr);
 
-        console.log(productCIDs)
+        const projects: Project<TempType>[] = await batchQueryIPFS<TempType>(projectCIDs);
 
-        const products: Product[] = [];
-
-        for await (const cid of productCIDs) {
-            const b64Buffer: Buffer = new Buffer(cid, 'base64');
-
-            const fileContents: string = await IPFSProxy.cat(b64Buffer);
-
-            const product: Product = parseIPFSStorageRecordToProduct(fileContents);
-
-            products.push(product);
-        }
-
-        response.status(200).json({ response: products })
+        response.status(200).json({ response: projects })
     } catch (e) {
         console.log(e)
         response.sendStatus(500);
     }
 })
 
-export {
-    app
-}
+export { app };
+

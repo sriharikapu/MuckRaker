@@ -12,12 +12,26 @@ import {
 
 interface MuckRakerContractInterface extends Interface {
   functions: {
-    create_product: TypedFunctionDescription<{
-      encode([ownerAddress, productCID]: [string, string]): string;
+    get_all_projects: TypedFunctionDescription<{ encode([]: []): string }>;
+
+    create_project: TypedFunctionDescription<{
+      encode([ownerAddress, projectCID]: [string, string]): string;
+    }>;
+
+    fund_project: TypedFunctionDescription<{
+      encode([funderAddress, projectCID]: [string, string]): string;
+    }>;
+
+    get_funders: TypedFunctionDescription<{
+      encode([projectCID]: [string]): string;
+    }>;
+
+    get_funding: TypedFunctionDescription<{
+      encode([funderAddress]: [string]): string;
     }>;
 
     get_owner: TypedFunctionDescription<{
-      encode([productCID]: [string]): string;
+      encode([projectCID]: [string]): string;
     }>;
 
     get_projects: TypedFunctionDescription<{
@@ -45,36 +59,68 @@ export class MuckRakerContract extends Contract {
   interface: MuckRakerContractInterface;
 
   functions: {
-    create_product(
+    get_all_projects(): Promise<string[]>;
+
+    create_project(
       ownerAddress: string,
-      productCID: string,
+      projectCID: string,
       overrides?: TransactionOverrides
     ): Promise<ContractTransaction>;
 
-    get_owner(productCID: string): Promise<string>;
+    fund_project(
+      funderAddress: string,
+      projectCID: string,
+      overrides?: TransactionOverrides
+    ): Promise<ContractTransaction>;
+
+    get_funders(projectCID: string): Promise<string[]>;
+
+    get_funding(funderAddress: string): Promise<string[]>;
+
+    get_owner(projectCID: string): Promise<string>;
 
     get_projects(ownerAddress: string): Promise<string[]>;
   };
 
-  create_product(
+  get_all_projects(): Promise<string[]>;
+
+  create_project(
     ownerAddress: string,
-    productCID: string,
+    projectCID: string,
     overrides?: TransactionOverrides
   ): Promise<ContractTransaction>;
 
-  get_owner(productCID: string): Promise<string>;
+  fund_project(
+    funderAddress: string,
+    projectCID: string,
+    overrides?: TransactionOverrides
+  ): Promise<ContractTransaction>;
+
+  get_funders(projectCID: string): Promise<string[]>;
+
+  get_funding(funderAddress: string): Promise<string[]>;
+
+  get_owner(projectCID: string): Promise<string>;
 
   get_projects(ownerAddress: string): Promise<string[]>;
 
   filters: {};
 
   estimate: {
-    create_product(
+    get_all_projects(): Promise<BigNumber>;
+
+    create_project(
       ownerAddress: string,
-      productCID: string
+      projectCID: string
     ): Promise<BigNumber>;
 
-    get_owner(productCID: string): Promise<BigNumber>;
+    fund_project(funderAddress: string, projectCID: string): Promise<BigNumber>;
+
+    get_funders(projectCID: string): Promise<BigNumber>;
+
+    get_funding(funderAddress: string): Promise<BigNumber>;
+
+    get_owner(projectCID: string): Promise<BigNumber>;
 
     get_projects(ownerAddress: string): Promise<BigNumber>;
   };

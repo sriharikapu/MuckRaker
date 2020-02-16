@@ -3,43 +3,65 @@ pragma solidity ^0.6.1;
 pragma experimental ABIEncoderV2;
 
 contract MuckRakerContract {
-    mapping(address => string[]) ownsProducts;
+    mapping(address => string[]) ownsProjects;
     mapping(string => address) isOwnedBy;
 
     mapping(address => string[]) isFunding;
     mapping(string => address[]) isFundedBy;
 
-    function create_project(address ownerAddress, string memory productCID)
+    mapping(string => bool) projectCIDUsed;
+    string[] _projects;
+
+    constructor() public {
+        _projects = new string[](10);
+    }
+
+    function get_all_projects() public view returns (string[] memory projects) {
+        return _projects;
+    }
+
+    function create_project(address ownerAddress, string memory projectCID)
         public
         returns (uint256)
     {
-        string[] storage products = ownsProducts[ownerAddress];
-        products.push(productCID);
+        require(
+            projectCIDUsed[projectCID] == false,
+            "Project CID has already been used"
+        );
 
-        isOwnedBy[productCID] = ownerAddress;
+        projectCIDUsed[projectCID] = true;
 
-        return products.length;
+        // updates the projects by the journalist
+        string[] storage projects = ownsProjects[ownerAddress];
+        projects.push(projectCID);
+
+        isOwnedBy[projectCID] = ownerAddress;
+
+        string[] storage globalProjects = _projects;
+        globalProjects.push(projectCID);
+
+        return projects.length;
     }
 
-    function fund_project(address funderAddress, string memory productCID)
+    function fund_project(address funderAddress, string memory projectCID)
         public
         returns (string memory)
     {
         string[] storage funding = isFunding[funderAddress];
-        funding.push(productCID);
+        funding.push(projectCID);
 
-        address[] storage fundedBy = isFundedBy[productCID];
+        address[] storage fundedBy = isFundedBy[projectCID];
         fundedBy.push(funderAddress);
 
-        return productCID;
+        return projectCID;
     }
 
-    function get_funders(string memory productCID)
+    function get_funders(string memory projectCID)
         public
         view
         returns (address[] memory)
     {
-        return isFundedBy[productCID];
+        return isFundedBy[projectCID];
     }
 
     function get_funding(address funderAddress)
@@ -50,8 +72,8 @@ contract MuckRakerContract {
         return isFunding[funderAddress];
     }
 
-    function get_owner(string memory productCID) public view returns (address) {
-        return isOwnedBy[productCID];
+    function get_owner(string memory projectCID) public view returns (address) {
+        return isOwnedBy[projectCID];
     }
 
     function get_projects(address ownerAddress)
@@ -59,6 +81,6 @@ contract MuckRakerContract {
         view
         returns (string[] memory)
     {
-        return ownsProducts[ownerAddress];
+        return ownsProjects[ownerAddress];
     }
 }

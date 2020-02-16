@@ -2,7 +2,7 @@ import { Action, Thunk } from "easy-peasy";
 
 export interface ProjectModel {
   name: string;
-  createdAt: Date;
+  createdAt: number;
   id: string;
   category: string;
   budget: number;
