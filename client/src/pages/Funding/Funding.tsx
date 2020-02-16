@@ -3,6 +3,7 @@ import { Grid, TextField, InputAdornment, makeStyles } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
 import FuzzySearch from "fuzzy-search";
 import ProjectCard from "./components/ProjectCard/ProjectCard";
+import FundedProjects from "./components/FundedProjects/FundedProjects";
 import { useStoreState, useStoreActions } from "../../store";
 
 const useStyles = makeStyles({
@@ -37,16 +38,7 @@ const Funding: React.FC = () => {
           )
         }}
       ></TextField>
-      <h1>Projects Currently Funding</h1>
-      <Grid container spacing={4}>
-        {projects.slice(0, 4).map((project, index) => {
-          return (
-            <Grid item xs={12} md={6} key={`${project.name}-${index}`}>
-              <ProjectCard {...project}></ProjectCard>
-            </Grid>
-          );
-        })}
-      </Grid>
+      <FundedProjects projects={projects.slice(0, 4)}></FundedProjects>
       <h1>All Projects</h1>
       <Grid container spacing={4}>
         {filteredProjects.map((project, index) => {
