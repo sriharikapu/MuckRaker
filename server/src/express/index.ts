@@ -5,13 +5,16 @@ import { IPFSProxy } from '../ipfs';
 import { contractCreateProject } from '../quorum/contracts/contractCreateProduct';
 import { contractGetAllProjects } from '../quorum/contracts/contractGetAllProjects';
 import { contractGetProjects } from '../quorum/contracts/contractGetProjects';
-import { TempType } from '../types/ProjectModel';
+import { TempType, Project } from '../types/ProjectModel';
 import { MetaMaskIDMiddleware, RESPONSE_LOCALS_ETH_ADDRESS } from './middleware/MetaMaskIDMiddleware';
+import { batchQueryIPFS } from '../ipfs/util'
+import { addProjectRoute } from './routes/add';
 
 const app: express.Application = express();
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+
 
 app.post('/api/add', MetaMaskIDMiddleware, async (request: Request, response: Response) => {
     const ownerAddr: string = response.locals[RESPONSE_LOCALS_ETH_ADDRESS];
@@ -23,10 +26,7 @@ app.post('/api/add', MetaMaskIDMiddleware, async (request: Request, response: Re
 
     const encodeFileContents: string = `${ownerAddr}!${fileName}!${fileContents}`
 
-    const fileCID: Buffer = await IPFSProxy.add(path, encodeFileContents, '777');
-    const fileCIDB64: string = fileCID.toString('base64')
-
-    const creationSuccess: boolean = await contractCreateProject(ownerAddr, fileCIDB64)
+    const creationSuccess: boolean = await addProjectRoute(ownerAddr, path, encodeFileContents)
 
     response.status(200).json({ response: creationSuccess });
 });
@@ -45,36 +45,6 @@ app.get('/api/all_projects', MetaMaskIDMiddleware, async (request: Request, resp
     response.status(200).json({ response: projects })
 })
 
-type Project<T> = {
-    name: string,
-    ownerAddress: string,
-    contents: T
-}
-
-const parseIPFSStorageRecord = <T>(ipfsContents: string): Project<T> => {
-    const parts: string[] = ipfsContents.split('!');
-    return {
-        ownerAddress: parts[0],
-        name: parts[1],
-        contents: (JSON.parse(parts[2]) as T)
-    }
-}
-
-const batchQueryIPFS = async <T>(projectCIDArray: string[]): Promise<Project<T>[]> => {
-    const projects: Project<T>[] = [];
-
-    for await (const cid of projectCIDArray) {
-        const b64Buffer: Buffer = new Buffer(cid, 'base64');
-
-        const fileContents: string = await IPFSProxy.cat(b64Buffer);
-
-        const project: Project<T> = parseIPFSStorageRecord<T>(fileContents);
-
-        projects.push(project);
-    }
-
-    return projects;
-}
 
 app.get('/api/projects', MetaMaskIDMiddleware, async (request: Request, response: Response) => {
     const ownerAddr: string = response.locals[RESPONSE_LOCALS_ETH_ADDRESS];
