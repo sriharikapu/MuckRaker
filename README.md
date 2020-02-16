@@ -1,6 +1,6 @@
-## MuckRaker - Shining Light A On The Truth
+## MuckRaker - Shining A Light On The Truth
 
-# Why
+# Why   
 - Journalists are constantly persecuted for reporting on politically or socially contentious topics. Threats or other forms of intimidation have been used throughout history to enable established political structures to maintain their power and prevent dissidence. Repercussions for reporting can often go as far as physical violence or death, as in the case of Jamal Khashoggi.
 
 # How do we solve this?

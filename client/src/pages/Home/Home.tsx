@@ -38,7 +38,7 @@ export default function Home() {
           gutterBottom
           className={classes.title}
         >
-          Shine Light A On The Truth
+          Shine Light on the Truth
         </Typography>
         <TextField
           placeholder="Search Projects"
