@@ -1,17 +1,14 @@
-import { Thunk, thunk, Action, action } from "easy-peasy";
 import axios from "axios";
-import { ProjectsModel, ProjectModel } from "./types";
+import { Action, action, Thunk, thunk } from "easy-peasy";
+import { ProjectModel, ProjectsModel } from "./types";
 // http://5e485095d9636d0014a1e1a0.mockapi.io/Project
 
 export const getProjects: Thunk<ProjectsModel> = thunk(
-  async (actions, payload) => {
+  async (actions, payload, helpers) => {
     const { setProjects } = actions;
-    const res = await axios.get(
-      "http://5e485095d9636d0014a1e1a0.mockapi.io/Project"
-    );
-    console.log("Projects: ", res);
+    const res2 = await axios.get('/api/all_projects')
 
-    setProjects(res.data);
+    setProjects(res2.data.response);
   }
 );
 
