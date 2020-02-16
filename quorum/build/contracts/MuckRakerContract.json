@@ -1709,8 +1709,8 @@
     "532561878": {
       "events": {},
       "links": {},
-      "address": "0xC99FB9d555Ef41edE32FC12D28FfAee2e0ef7601",
-      "transactionHash": "0x554fc02c0a205a90db1f59e52a74b96ea1d949fc37d4dae9f33abc53277744e4"
+      "address": "0xAB59a67b0Ce4290A24E5A0B7b721207a0F46f359",
+      "transactionHash": "0x80839a71ae33b35d9ff190f55ddae3beb8529cd2466215e7490a029bb884497e"
     },
     "1581802458359": {
       "events": {},
@@ -1720,7 +1720,7 @@
     }
   },
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-02-15T21:37:30.480Z",
+  "updatedAt": "2020-02-15T22:30:14.425Z",
   "networkType": "quorum",
   "devdoc": {
     "methods": {}

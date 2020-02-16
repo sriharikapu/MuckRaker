@@ -3,23 +3,26 @@ pragma solidity ^0.6.1;
 pragma experimental ABIEncoderV2;
 
 contract MuckRakerContract {
-    mapping(address => string[]) projects;
-    mapping(string => address) owner;
+    mapping(address => string[]) ownsProducts;
+    mapping(string => address) isOwnedBy;
+
+    mapping(address => string[]) isFunding;
+    mapping(string => address[]) isFundedBy;
 
     function create_product(address ownerAddress, string memory productCID)
         public
         returns (bool success)
     {
-        string[] storage products = projects[ownerAddress];
+        string[] storage products = ownsProducts[ownerAddress];
         products.push(productCID);
 
-        owner[productCID] = ownerAddress;
+        isOwnedBy[productCID] = ownerAddress;
 
         return true;
     }
 
     function get_owner(string memory productCID) public view returns (address) {
-        return owner[productCID];
+        return isOwnedBy[productCID];
     }
 
     function get_projects(address ownerAddress)
@@ -27,6 +30,6 @@ contract MuckRakerContract {
         view
         returns (string[] memory)
     {
-        return projects[ownerAddress];
+        return ownsProducts[ownerAddress];
     }
 }
