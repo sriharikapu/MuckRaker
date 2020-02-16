@@ -53,7 +53,7 @@ app.get('/api/all_projects', MetaMaskIDMiddleware, async (request: Request, resp
 
     const projects: Project<TempType>[] = await batchQueryIPFS<TempType>(projectCIDs);
 
-    response.status(200).json({ response: projects })
+    response.status(200).json({ response: projects.map(project => project.contents) })
 })
 
 
