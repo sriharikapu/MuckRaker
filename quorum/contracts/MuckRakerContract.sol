@@ -2,6 +2,11 @@
 pragma solidity ^0.6.1;
 pragma experimental ABIEncoderV2;
 
+struct ProjectStruct {
+    bool used;
+    string report;
+}
+
 contract MuckRakerContract {
     mapping(address => string[]) ownsProjects;
     mapping(string => address) isOwnedBy;
@@ -9,8 +14,9 @@ contract MuckRakerContract {
     mapping(address => string[]) isFunding;
     mapping(string => address[]) isFundedBy;
 
-    mapping(string => bool) projectCIDUsed;
     string[] _projects;
+
+    mapping(string => ProjectStruct) projectInfo;
 
     constructor() public {
         _projects = new string[](10);
@@ -20,16 +26,34 @@ contract MuckRakerContract {
         return _projects;
     }
 
+    function set_project_report(
+        string memory projectCID,
+        string memory projectReportCID
+    ) public returns (bool success) {
+        require(
+            projectInfo[projectCID].used == true,
+            "The project CID hasn't been used yet."
+        );
+        require(
+            bytes(projectInfo[projectCID].report).length == 0,
+            "Report has already been set, it cannot be set again."
+        );
+
+        projectInfo[projectCID].report = projectReportCID;
+
+        return true;
+    }
+
     function create_project(address ownerAddress, string memory projectCID)
         public
         returns (uint256)
     {
         require(
-            projectCIDUsed[projectCID] == false,
+            projectInfo[projectCID].used == false,
             "Project CID has already been used"
         );
 
-        projectCIDUsed[projectCID] = true;
+        projectInfo[projectCID].used = true;
 
         // updates the projects by the journalist
         string[] storage projects = ownsProjects[ownerAddress];
