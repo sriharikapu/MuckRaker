@@ -3,10 +3,8 @@ import { Action, Thunk } from "easy-peasy";
 export interface ProjectModel {
   name: string;
   createdAt: number;
-  id: string;
   category: string;
   budget: number;
-  report: string;
   location: string;
   imageURL: string
 }
