@@ -6,7 +6,8 @@ export interface ProjectModel {
   category: string;
   budget: number;
   location: string;
-  imageURL: string
+  imageURL: string,
+  address: string
 }
 
 export interface ProjectsModel {
@@ -14,4 +15,5 @@ export interface ProjectsModel {
   addProject: Action<ProjectsModel, ProjectModel>;
   getProjects: Thunk<ProjectsModel>;
   setProjects: Action<ProjectsModel, Array<ProjectModel>>;
+  fundProject: Thunk<ProjectsModel, any>
 }
