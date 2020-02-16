@@ -6,7 +6,7 @@ export const useStyles = makeStyles(theme => ({
     minHeight: theme.spacing(30),
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     [theme.breakpoints.down("xs")]: {
       margin: "0"
     }
