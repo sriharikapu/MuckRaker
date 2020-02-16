@@ -1,8 +1,8 @@
 require('dotenv').config()
-import ethers, { Wallet } from 'ethers';
+import { Wallet } from 'ethers';
 import * as faker from 'faker';
 import { ProjectModel } from '../../../client/src/store/projects/types';
-import { addProjectRoute, encodeFileContents } from '../express/routes/add';
+import { addProject, encodeFileContents } from '../express/routes/add';
 
 const main = async (cnt: number) => {
     for (let i = 0; i < cnt; ++i) {
@@ -19,7 +19,7 @@ const main = async (cnt: number) => {
 
         const address: string = wallet.address;
 
-        await addProjectRoute(address, address, encodeFileContents(address, address, JSON.stringify(project)))
+        await addProject(address, address, encodeFileContents(address, address, JSON.stringify(project)))
     }
 }
 

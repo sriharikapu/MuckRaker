@@ -17,7 +17,7 @@ const decodeFileContents = <T>(ipfsContents: string): Project<T> => {
 }
 
 
-const addProjectRoute = async (ownerAddr: string, path: string, fileContents: string): Promise<boolean> => {
+const addProject = async (ownerAddr: string, path: string, fileContents: string): Promise<boolean> => {
 
     const fileCID: Buffer = await IPFSProxy.add(path, fileContents, '777');
     const fileCIDB64: string = fileCID.toString('base64')
@@ -28,7 +28,7 @@ const addProjectRoute = async (ownerAddr: string, path: string, fileContents: st
 }
 
 export {
-    addProjectRoute,
+    addProject,
     encodeFileContents,
     decodeFileContents
 };

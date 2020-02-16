@@ -14,6 +14,10 @@ interface MuckRakerContractInterface extends Interface {
   functions: {
     get_all_projects: TypedFunctionDescription<{ encode([]: []): string }>;
 
+    set_project_report: TypedFunctionDescription<{
+      encode([projectCID, projectReportCID]: [string, string]): string;
+    }>;
+
     create_project: TypedFunctionDescription<{
       encode([ownerAddress, projectCID]: [string, string]): string;
     }>;
@@ -61,6 +65,12 @@ export class MuckRakerContract extends Contract {
   functions: {
     get_all_projects(): Promise<string[]>;
 
+    set_project_report(
+      projectCID: string,
+      projectReportCID: string,
+      overrides?: TransactionOverrides
+    ): Promise<ContractTransaction>;
+
     create_project(
       ownerAddress: string,
       projectCID: string,
@@ -83,6 +93,12 @@ export class MuckRakerContract extends Contract {
   };
 
   get_all_projects(): Promise<string[]>;
+
+  set_project_report(
+    projectCID: string,
+    projectReportCID: string,
+    overrides?: TransactionOverrides
+  ): Promise<ContractTransaction>;
 
   create_project(
     ownerAddress: string,
@@ -108,6 +124,11 @@ export class MuckRakerContract extends Contract {
 
   estimate: {
     get_all_projects(): Promise<BigNumber>;
+
+    set_project_report(
+      projectCID: string,
+      projectReportCID: string
+    ): Promise<BigNumber>;
 
     create_project(
       ownerAddress: string,
