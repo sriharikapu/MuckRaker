@@ -5,7 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
-    paddingLeft: "5vw"
+    paddingLeft: "5vw",
+    clipPath: "ellipse(85% 100% at 50% 0%)",
+    background:
+      "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)",
+    minHeight: "100vh"
   },
   container: {
     display: "flex",
@@ -14,7 +18,13 @@ const useStyles = makeStyles({
     flexDirection: "column"
   },
   title: {
-    fontFamily: "Slabo"
+    fontFamily: "Slabo",
+    color: "white"
+  },
+  search: {
+    color: "white",
+    border: "1px solid white",
+    borderRadius: "5px"
   }
 });
 export default function Home() {
@@ -39,7 +49,8 @@ export default function Home() {
               <InputAdornment position="start">
                 <SearchOutlined />
               </InputAdornment>
-            )
+            ),
+            classes: { root: classes.search }
           }}
         />
       </Grid>
