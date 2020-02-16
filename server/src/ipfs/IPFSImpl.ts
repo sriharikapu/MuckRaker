@@ -7,7 +7,7 @@ class IPFSImpl implements IPFSInterface {
 
     private readonly ipfsModule: any;
 
-    constructor(ipfsModule: any) {
+    public constructor(ipfsModule: any) {
         this.ipfsModule = ipfsModule;
     }
 
@@ -31,7 +31,6 @@ class IPFSImpl implements IPFSInterface {
     }
 
     cat = async (path: CID | Buffer | string): Promise<string> => {
-        console.log(path)
         const chunks: Buffer[] = []
 
         for await (const chunk of this.ipfsModule.cat(path)) {

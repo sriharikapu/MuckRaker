@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { ethers } from 'ethers';
 
 export const RESPONSE_LOCALS_ETH_ADDRESS = 'ethAddress'
 

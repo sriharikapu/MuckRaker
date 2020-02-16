@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "compile:contracts": "typechain --target ethers --outDir ./contracts/types \"../quorum/build/contracts/**/*.json\"",
     "start": "ts-node-dev ."
   },
   "author": "",
@@ -16,11 +17,17 @@
     "assemblyscript": "^0.9.2",
     "axios": "^0.19.2",
     "bl": "^4.0.0",
+    "body-parser": "^1.19.0",
     "cids": "^0.7.3",
     "dotenv": "^8.2.0",
     "ethers": "^4.0.44",
     "express": "^4.17.1",
     "form-data": "^3.0.0",
-    "ipfs-http-client": "^42.0.0"
+    "ipfs-http-client": "^42.0.0",
+    "js-sha3": "^0.8.0"
+  },
+  "devDependencies": {
+    "typechain": "^1.0.5",
+    "typechain-target-ethers": "^1.0.3"
   }
 }
