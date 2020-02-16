@@ -8,7 +8,8 @@
   },
   "scripts": {
     "ganache": "ganache-cli -q -p 8545",
-    "build": "truffle build"
+    "build": "truffle build",
+    "deploy": "truffle migrate --network quorom --reset"
   },
   "repository": {
     "type": "git"
